@@ -96,44 +96,48 @@ namespace HotelProject.UI.CustomerWPF
 
             var registrations = registrationManager.GetRegistrationByActivityId(activity.Id);
 
-            if (selectedMembers == null || selectedMembers.Count == 0)
+            if (selectedMembers == null)
             {
                 MessageBox.Show("No members selected!");
                 return;
             }
-
-            foreach (Registration reg in registrations)
+            else
             {
                 foreach (Member member in selectedMembers)
                 {
-                    bool isMemberRegistered = registrationManager.MemberRegistrated(member.Name, reg.Id);
-
-                    if (isMemberRegistered)
+                    if (registrations.Count() == 0)
                     {
-                        MessageBox.Show($"Member {member.Name} is already registered for this activity");
+                        registration.AddMember(member);
                     }
                     else
                     {
-                        registration.AddMember(member);
+                        foreach (Registration r in registrations)
+                        {
+                            var exsit = registrationManager.MemberRegistrated(member.Name, r.Id);
+                            if (exsit == true)
+                            {
+                                MessageBox.Show($"Member {member.Name} is already registrated to this activity");
+                            }
+                            else
+                            {
+                                registration.AddMember(member);
+                            }
+                        }
                     }
                 }
             }
 
             if (selectedMembers.Count > activitiesUI.AvailableSpots)
             {
-                MessageBox.Show("Too many people: availableSpots overridden!");
+                MessageBox.Show("Too many people: avalaibleSpots overrided!");
                 return;
             }
 
-            List<Member> members = registration.GetMembers();
+            registrationManager.AddRegistration(registration);
 
-            if (members.Count > 0)
-            {
-                registrationManager.AddRegistration(registration);
-                int newAvailableSpots = activitiesUI.AvailableSpots - members.Count;
-                activity.NumberOfPlaces = newAvailableSpots;
-                activityManager.UpdateActivity(activity);
-            }
+            int newAvalaibleSpots = activitiesUI.AvailableSpots - selectedMembers.Count;
+            activity.NumberOfPlaces = newAvalaibleSpots;
+            activityManager.UpdateActivity(activity);
 
             ActivitiesWindow a = new ActivitiesWindow(null);
             a.Show();
