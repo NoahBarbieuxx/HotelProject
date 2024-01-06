@@ -1,0 +1,46 @@
+﻿<Window x:Class="HotelProject.UI.CustomerWPF.RegistrateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelProject.UI.CustomerWPF"
+        mc:Ignorable="d"
+        Title="RegistrateWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5">
+            <TextBlock.Inlines>
+                <Run FontWeight="Bold">Activity Name:</Run>
+                <Run Text=" " />
+                <Run Text="{Binding Path=Name}" />
+            </TextBlock.Inlines>
+        </TextBlock>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Margin="5">
+            <TextBlock.Inlines>
+                <Run FontWeight="Bold">Activity Description:</Run>
+                <Run Text=" " />
+                <Run Text="{Binding Path=Description}" />
+            </TextBlock.Inlines>
+        </TextBlock>
+        <Label Grid.Row="2" Grid.Column="0" FontWeight="Bold">Member List:</Label>
+        <DataGrid Name="MemberDataGrid" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" AutoGenerateColumns="True" SelectionChanged="MemberDataGrid_SelectionChanged">
+        </DataGrid>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Margin="5" Name="CostTextBlock">
+        </TextBlock>
+        <Button Grid.Row="5" Grid.Column="0" Name="AddRegistrationButton" Margin="5" Content="Add Registration" Click="AddRegistrationButton_Click" />
+        <Button Grid.Row="5" Grid.Column="1" Name="HomeButton" Margin="5" Content="Go back to Home" Click="HomeButton_Click" />
+    </Grid>
+</Window>
